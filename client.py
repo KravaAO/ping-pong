@@ -41,7 +41,13 @@ def receive():
 font_win = font.Font(None, 72)
 font_main = font.Font(None, 36)
 # --- ЗОБРАЖЕННЯ ----
-
+BG_IMG = transform.scale(image.load('images/Board.png'), (WIDTH, HEIGHT))
+PLAYER1_IMG = transform.scale(image.load('images/Player1.png'), (20, 100))
+PLAYER2_IMG = transform.scale(image.load('images/Player2.png'), (20, 100))
+BALL_IMG = transform.scale(image.load('images/Ball.png'), (20, 20))
+SCORE_BAR_LEFT = transform.scale(image.load('images/ScoreBar.png'), (350, 60))
+SCORE_BAR_RIGHT = transform.flip(transform.scale(image.load('images/ScoreBar.png'), (350, 60)), True, False)
+ball_motion_img = transform.scale(image.load('images/BallMotion.png'), (50, 35))
 # --- ЗВУКИ ---
 
 # --- ГРА ---
@@ -88,12 +94,15 @@ while True:
         continue  # Блокує гру після перемоги
 
     if game_state:
-        screen.fill((30, 30, 30))
-        draw.rect(screen, (0, 255, 0), (20, game_state['paddles']['0'], 20, 100))
-        draw.rect(screen, (255, 0, 255), (WIDTH - 40, game_state['paddles']['1'], 20, 100))
-        draw.circle(screen, (255, 255, 255), (game_state['ball']['x'], game_state['ball']['y']), 10)
+        screen.blit(BG_IMG, (0, 0))
+        screen.blit(PLAYER1_IMG, (20, game_state['paddles']['0']))
+        screen.blit(PLAYER2_IMG, (WIDTH - 40, game_state['paddles']['1']))
+        screen.blit(BALL_IMG, (game_state['ball']['x'], game_state['ball']['y']))
+        screen.blit(ball_motion_img, (game_state['ball']['x'], game_state['ball']['y']))
         score_text = font_main.render(f"{game_state['scores'][0]} : {game_state['scores'][1]}", True, (255, 255, 255))
-        screen.blit(score_text, (WIDTH // 2 -25, 20))
+        screen.blit(score_text, (WIDTH // 2 - 25, 20))
+        screen.blit(SCORE_BAR_LEFT, (0, 0))
+        screen.blit(SCORE_BAR_RIGHT, (450, 0))
 
         if game_state['sound_event']:
             if game_state['sound_event'] == 'wall_hit':
