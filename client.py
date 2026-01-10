@@ -40,7 +40,7 @@ def receive():
 # --- ШРИФТИ ---
 font_win = font.Font(None, 72)
 font_main = font.Font(None, 36)
-# --- ЗОБРАЖЕННЯ ----
+# --- ЗОБРАЖЕННЯ ---- #
 BG_IMG = transform.scale(image.load('images/Board.png'), (WIDTH, HEIGHT))
 PLAYER1_IMG = transform.scale(image.load('images/Player1.png'), (20, 100))
 PLAYER2_IMG = transform.scale(image.load('images/Player2.png'), (20, 100))
